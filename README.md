@@ -1,13 +1,13 @@
 # Home Server Setup
 
-## Problem Statement
-Need for a secure, reliable home server that segregates VPN-protected services from standard services, while maintaining easy access to both via a unified interface. Must handle torrenting, media services, and various utilities without exposing sensitive services to potential threats.
+## Goal
+The goal here is to create reproducable and easy to maintan home server setup. Besides basic setup everything runs in docker compose. Its main duties are media server and media management, but I I want to easily spin up self hosted services in docker containers when the need arises.
 
 ## Hardware
 **GMKtec N150 Mini PC**
-- Intel N100/N105 Alder Lake-N processor
+- Intel N150 Alder Lake-N processor
 - 8GB DDR4 RAM
-- 256GB SSD storage
+- 256GB SSD storage + empty M2 slot
 - Intel UHD Graphics with hardware acceleration capability
 - 2.5Gb Ethernet connectivity
 
@@ -17,16 +17,14 @@ Need for a secure, reliable home server that segregates VPN-protected services f
 Custom kernel updates were required to enable hardware acceleration for the N150 GPU.
 
 ## Docker & Portainer
-Docker provides containerization for services, with Portainer offering easy management through a web interface. This combination enables efficient deployment and monitoring of multiple services with minimal overhead.
-
-All service deployments are managed through Portainer's "Stacks" feature using Docker Compose files, providing version-controlled, reproducible configurations for each service group.
-
+- I choose to run portainer as a docker management front end.
 ## Networking Setup
 The network architecture uses two distinct network segments:
 1. **Non-VPN Network (`non_vpn`)**: For services requiring standard internet access
 2. **VPN Network Stack (`vpn_stack`)**: For privacy-sensitive services requiring tunneled access through Gluetun VPN container. Services connect to this network using `network_mode: service:gluetun` to share the VPN container's networking stack.
 
 A single main reverse proxy (NGINX) on ports 80/443 serves as the entry point for all services, while a secondary proxy inside the VPN stack handles routing within the tunneled environment.
+This should ensure that I can enforce SSL with signed certifcates on all open ports on the host machine.
 
 ### Setting up HTTPS
 SSL certificates managed through Let's Encrypt with auto-renewal for all services using DNS challenges via DuckDNS. This free subdomain service allows for automated certificate management without exposing services to the internet. Certificates point to the local server IP, with the main proxy handling certificate termination for all internal services.
