@@ -13,6 +13,7 @@ A comprehensive, easy-to-deploy home server setup built entirely with Docker Com
 - **HTTPS support**: Automatic SSL certificate management with Let's Encrypt and DuckDNS
 - **Privacy-focused**: VPN integration for services that need enhanced privacy
 - **Low resource requirements**: Optimized for compact mini PCs and small form factor hardware
+
 ## Project Structure
 The project is organized into the following directories:
 
@@ -41,7 +42,7 @@ This setup has been tested and optimized for the following hardware:
 ## 🚀 Quick Start
 
 ### Prerequisites
-
+This setup is based on Ubuntu Server LTS. Before you begin, ensure you have the following:
 1. Install Docker and Docker Compose on your system
 2. Install [Portainer](https://docs.portainer.io/start/install) for easy container management
 3. Clone this repository:
@@ -49,13 +50,14 @@ This setup has been tested and optimized for the following hardware:
    git clone https://github.com/yourusername/homelab-server.git
    cd homelab-server
    ```
+4. If you want to use your intel GPU for transcoding, ensure your current kernel version supports your GPU.
 
 ### Deployment
 
 1. Access your Portainer instance (typically at http://your-server-ip:9000)
 2. Navigate to "Stacks" and click "Add stack"
 3. Upload the docker-compose.yml file from this repository
-4. Configure your environment variables (see [Configuration](#%EF%B8%8F-configuration) section)
+4. Configure your environment variables or load example.env from the stack subdirectory and fill in the required values
 5. Click "Deploy the stack"
 
 ## 🏗️ Architecture
@@ -63,8 +65,6 @@ This setup has been tested and optimized for the following hardware:
 ### Network Design
 
 This project uses a dual-network architecture:
-
-![Network Architecture](https://raw.githubusercontent.com/yourusername/homelab-server/main/docs/images/network_diagram.png)
 
 1. Nginx Proxy Manager
    - Acts as a reverse proxy for all services
@@ -82,8 +82,8 @@ SSL certificates are automatically managed through Let's Encrypt with DNS challe
 1. Register for a free subdomain at [DuckDNS](https://www.duckdns.org/)
 2. Point your domain to your private IP address, no need to expose your server to the internet
 3. Set up dns-01 challenge in Nginx Proxy Manager for automatic certificate renewal using your DuckDNS token
-### Backup Content
 
+### Backup Content
 At minimum, back up your configuration directory:
 ```
 /path/to/config
