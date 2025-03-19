@@ -13,6 +13,20 @@ A comprehensive, easy-to-deploy home server setup built entirely with Docker Com
 - **HTTPS support**: Automatic SSL certificate management with Let's Encrypt and DuckDNS
 - **Privacy-focused**: VPN integration for services that need enhanced privacy
 - **Low resource requirements**: Optimized for compact mini PCs and small form factor hardware
+## Project Structure
+The project is organized into the following directories:
+
+home-server-core/: Core services that are essential for the server to function
+   - Nginx Proxy Manager: Reverse proxy for routing traffic to different services
+   - Duplicati: Backup solution for data protection
+media-server/
+   - Jellyfin: Media server for streaming movies, TV shows, and music
+   - Sonarr: TV show management and downloading
+   - Radarr: Movie management and downloading
+   - Prawlarr: Indexer for Sonarr and Radarr
+   - Flaresolverr: Proxy for passing Cloudflare DDoS protection
+   - qbittorrent: Torrent client for downloading files
+   - gluetun: VPN container for routing traffic through a VPN
 
 ## 🖥️ Hardware Requirements
 
