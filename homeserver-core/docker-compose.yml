@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    volumes:
+      - /config/duplicati:/data  # Duplicati's data in your config directory
+      - /config:/source/config:ro  # Your config directories (read-only)
+      - /backups:/backups  # Where to store backups
+  nginx-proxy-manager:
+    container_name: nginx-proxy-manager
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "443:443"
+      - "80:80"
+      - "81:81"
+
+    volumes:
+      - /config/nginx-proxy-manager/data:/data
+      - /config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+
+
